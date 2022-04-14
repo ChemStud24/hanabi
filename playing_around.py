@@ -57,8 +57,10 @@ def run_game(game_parameters):
 
     # print_state(state)
 
+    other_state = state.copy()
+
     observation = state.observation(state.cur_player())
-    print_observation(observation)
+    # print_observation(observation)
 
     legal_moves = state.legal_moves()
     print("")
@@ -71,7 +73,7 @@ def run_game(game_parameters):
     # print("Chose random legal move: {}".format(move))
     print(move)
 
-    state.apply_move(move)
+    other_state.apply_move(move)
 
   print("")
   print("Game done. Terminal state:")
