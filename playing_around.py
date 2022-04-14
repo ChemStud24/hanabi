@@ -58,9 +58,11 @@ def run_game(game_parameters):
     # print_state(state)
 
     other_state = state.copy()
+    print(other_state)
+    print(other_state.player_hands)
 
     observation = state.observation(state.cur_player())
-    print_observation(observation)
+    # print_observation(observation)
 
     legal_moves = state.legal_moves()
     print("")
