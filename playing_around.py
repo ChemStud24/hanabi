@@ -59,7 +59,7 @@ def run_game(game_parameters):
 
     other_state = state.copy()
     print(other_state)
-    print(other_state._state)
+    print(other_state._state.deck)
 
     observation = state.observation(state.cur_player())
     # print_observation(observation)
