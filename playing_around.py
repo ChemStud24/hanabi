@@ -57,6 +57,7 @@ def run_game(game_parameters):
       state2.deal_random_card()
       continue
 
+    """
     print_state(state)
     print_state(state2)
 
@@ -77,9 +78,9 @@ def run_game(game_parameters):
     # other_state = state.copy()
     # print(other_state)
     # print(other_state._state.Deck())
-
+    """
     observation = state.observation(state.cur_player())
-    # print_observation(observation)
+    print_observation(observation)
 
     legal_moves = state.legal_moves()
     print("")
@@ -106,4 +107,4 @@ if __name__ == "__main__":
   # Check that the cdef and library were loaded from the standard paths.
   assert pyhanabi.cdef_loaded(), "cdef failed to load"
   assert pyhanabi.lib_loaded(), "lib failed to load"
-  run_game({"players": 2, "random_start_player": True})
+  run_game({"players": 2, "random_start_player": False, "colors":1})
