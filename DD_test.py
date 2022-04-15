@@ -59,6 +59,7 @@ def run_game(game_parameters,iterations):
 
       move = double_dummy_action(state)
       state.apply_move(move)
+    print_state(state)
     cum_score += state.score()
     if state.score() == game.num_colors()*game.num_ranks():
       perfects += 1
@@ -71,4 +72,4 @@ if __name__ == "__main__":
   # Check that the cdef and library were loaded from the standard paths.
   assert pyhanabi.cdef_loaded(), "cdef failed to load"
   assert pyhanabi.lib_loaded(), "lib failed to load"
-  run_game({"players": 2, "random_start_player": False,"colors":3},int(sys.argv[1]))
+  run_game({"players": 2, "random_start_player": False,"colors":int(sys.argv[2])},int(sys.argv[1]))
