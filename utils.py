@@ -11,7 +11,7 @@ def discard_legal(state):
 	return False
 
 def double_dummy_action(state):
-	cur_hand = card.to_dict() for card in state.player_hands()[state.cur_player()]
+	cur_hand = (card.to_dict() for card in state.player_hands()[state.cur_player()])
 
 	# if I have a playable card, play it
 	for idx,card in enumerate(cur_hand):
