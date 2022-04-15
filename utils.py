@@ -26,7 +26,7 @@ def double_dummy_action(state):
 			if pid != state.cur_player():
 				hand = (card.to_dict() for card in hand)
 				for idx,card in enumerate(hand):
-					if state.card_playable_on_fireworks(card['color'],card['rank']):
+					if state.card_playable_on_fireworks(color_char_to_idx(card['color']),card['rank']):
 						# give the first clue
 						for move in state.legal_moves():
 							if move.type() == HanabiMove.REVEAL_COLOR or move.type() == HanabiMove.REVEAL_RANK:
