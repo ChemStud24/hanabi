@@ -18,6 +18,7 @@ from __future__ import print_function
 
 import numpy as np
 from hanabi_learning_environment import pyhanabi
+from utils import double_dummy_action
 
 
 def run_game(game_parameters):
@@ -79,18 +80,23 @@ def run_game(game_parameters):
     # print(other_state)
     # print(other_state._state.Deck())
     """
-    observation = state.observation(state.cur_player())
-    print_observation(observation)
 
-    legal_moves = state.legal_moves()
-    print("")
-    print("Number of legal moves: {}".format(len(legal_moves)))
-    print("Legal moves:")
-    print('\n'.join(str(i) + ": " + str(m) for i,m in enumerate(legal_moves)))
-    move_idx = int(input('Whats is your move?'))
-    move = legal_moves[move_idx]
-    # move = np.random.choice(legal_moves)
-    # print("Chose random legal move: {}".format(move))
+    if state.cur_player() == 1:
+      move = double_dummy_action(state)
+    else:
+      observation = state.observation(state.cur_player())
+      print_observation(observation)
+
+      legal_moves = state.legal_moves()
+      print("")
+      print("Number of legal moves: {}".format(len(legal_moves)))
+      print("Legal moves:")
+      print('\n'.join(str(i) + ": " + str(m) for i,m in enumerate(legal_moves)))
+      move_idx = int(input('Whats is your move?'))
+      move = legal_moves[move_idx]
+      # move = np.random.choice(legal_moves)
+      # print("Chose random legal move: {}".format(move))
+      
     print(move)
 
     state.apply_move(move)
