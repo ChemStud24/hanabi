@@ -67,7 +67,7 @@ def run_game(game_parameters):
     #   print(hand)
     #   state2.set_hand(pid,hand)
 
-    state2.set_hand(1,state.observation(0).observed_hands[1])
+    state2.set_hand(1,state.observation(0).observed_hands()[1])
 
     print(state)
     print(state2)
