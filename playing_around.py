@@ -61,14 +61,14 @@ def run_game(game_parameters):
     print_state(state2)
 
     # print(state.observation(1).observed_hands()[1])
-    print(card.to_dict() for card in state.observation(0).observed_hands()[1])
+    print((card.to_dict() for card in state.observation(0).observed_hands()[1]))
 
     # hands = state.player_hands()
     # for pid,hand in enumerate(hands):
     #   print(hand)
     #   state2.set_hand(pid,hand)
 
-    state2.set_hand(1,card.to_dict() for card in state.observation(0).observed_hands()[1])
+    state2.set_hand(1,(card.to_dict() for card in state.observation(0).observed_hands()[1]))
 
     print(state)
     print(state2)
