@@ -12,6 +12,8 @@ if __name__ == "__main__":
   for r in range(1,6):
   	for c in range(1,6):
   		ncards = 2*r*c
+  		if ncards < 10:
+  			continue
   		nworlds = len(list(permutations(range(ncards-5),5)))
   		t0 = time()
   		run_game({"players": 2, "random_start_player": False,"colors":c,"ranks":r},iterations)
