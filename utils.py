@@ -78,6 +78,9 @@ def double_dummy_action(state):
 					return move
 			else:
 				dups.append(card)
+				print(card['rank'])
+				print(highest)
+				print(card['rank'] > highest)
 				if card['rank'] > highest:
 					highest = card['rank']
 					high_idx = idx
