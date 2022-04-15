@@ -21,6 +21,7 @@ def double_dummy_action(state):
 			if move in state.legal_moves():
 				return move
 			else:
+				print(state.legal_moves())
 				print(move)
 				print(state)
 				return move
@@ -39,6 +40,7 @@ def double_dummy_action(state):
 								if move in state.legal_moves():
 									return move
 								else:
+									print(state.legal_moves())
 									print(move)
 									print(state)
 									return move
@@ -52,6 +54,7 @@ def double_dummy_action(state):
 				if move in state.legal_moves():
 					return move
 				else:
+					print(state.legal_moves())
 					print(move)
 					print(state)
 					return move
@@ -67,6 +70,7 @@ def double_dummy_action(state):
 				if move in state.legal_moves():
 					return move
 				else:
+					print(state.legal_moves())
 					print(move)
 					print(state)
 					return move
@@ -79,6 +83,7 @@ def double_dummy_action(state):
 		if move in state.legal_moves():
 			return move
 		else:
+			print(state.legal_moves())
 			print(move)
 			print(state)
 			return move
@@ -88,6 +93,7 @@ def double_dummy_action(state):
 	if move in state.legal_moves():
 		return move
 	else:
+		print(state.legal_moves())
 		print(move)
 		print(state)
 		return move
