@@ -50,11 +50,11 @@ def run_game(game_parameters):
   print(game.parameter_string(), end="")
 
   state = game.new_initial_state()
-  state2 = game.new_initial_state()
+  # state2 = game.new_initial_state()
   while not state.is_terminal():
     if state.cur_player() == pyhanabi.CHANCE_PLAYER_ID:
       state.deal_random_card()
-      state2.deal_random_card()
+      # state2.deal_random_card()
       continue
 
     """
@@ -93,7 +93,7 @@ def run_game(game_parameters):
     # print("Chose random legal move: {}".format(move))
     print(move)
 
-    # other_state.apply_move(move)
+    state.apply_move(move)
 
   print("")
   print("Game done. Terminal state:")
