@@ -65,6 +65,7 @@ def run_game(game_parameters,iterations):
   # print(str(iterations) + " games completed.")
   # print("Average Score: " + str(cum_score/iterations))
   # print("Perfect Games: " + str(perfects/iterations*100) + "%")
+  return cum_score/iterations
 
 
 if __name__ == "__main__":

@@ -16,6 +16,6 @@ if __name__ == "__main__":
   			continue
   		nworlds = len(list(permutations(range(ncards-5),5)))
   		t0 = time()
-  		run_game({"players": 2, "random_start_player": False,"colors":c,"ranks":r},iterations)
+  		score = run_game({"players": 2, "random_start_player": False,"colors":c,"ranks":r},iterations)
   		t = time() - t0
-  		print("Ranks: " + str(r) + " Colors: " + str(c) + " Worlds: " + str(nworlds) + " Time: " + str(nworlds/iterations*t/3600))
+  		print("Ranks: " + str(r) + " Colors: " + str(c) + " Score: " + str(score/(r*c)) + " Worlds: " + str(nworlds) + " Time: " + str(nworlds/iterations*t/60))
