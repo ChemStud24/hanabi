@@ -23,6 +23,7 @@ def double_dummy_action(state):
 			else:
 				print(move)
 				print(state)
+				return move
 
 	# if you have a playable card, I will give a random clue if allowed
 	if state.information_tokens() > 0:
@@ -40,6 +41,7 @@ def double_dummy_action(state):
 								else:
 									print(move)
 									print(state)
+									return move
 
 	if discard_legal(state):
 
@@ -52,6 +54,7 @@ def double_dummy_action(state):
 				else:
 					print(move)
 					print(state)
+					return move
 
 		# if I have duplicates, I will discard one
 		# else, I will discard the highest card in my hand
@@ -66,6 +69,7 @@ def double_dummy_action(state):
 				else:
 					print(move)
 					print(state)
+					return move
 			else:
 				dups.append(card)
 				if card['rank'] > highest:
@@ -77,6 +81,7 @@ def double_dummy_action(state):
 		else:
 			print(move)
 			print(state)
+			return move
 
 	# an edge case where none of the above is true
 	move = random.choice(state.legal_moves())
@@ -85,3 +90,4 @@ def double_dummy_action(state):
 	else:
 		print(move)
 		print(state)
+		return move
