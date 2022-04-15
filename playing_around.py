@@ -62,11 +62,12 @@ def run_game(game_parameters):
 
     hands = state.player_hands()
     for pid,hand in enumerate(hands):
+      print(hand)
       state2.set_hand(pid,hand)
 
     print(state)
     print(state2)
-    
+
     # other_state = state.copy()
     # print(other_state)
     # print(other_state._state.Deck())
