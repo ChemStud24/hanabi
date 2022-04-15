@@ -1,3 +1,4 @@
+from hanabi_learning_environment import pyhanabi
 from pyhanabi import color_char_to_idx, HanabiMove
 import random
 
