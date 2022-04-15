@@ -59,7 +59,7 @@ def run_game(game_parameters,iterations):
 
       move = double_dummy_action(state)
       state.apply_move(move)
-    print_state(state)
+    print(state)
     cum_score += state.score()
     if state.score() == game.num_colors()*game.num_ranks():
       perfects += 1
