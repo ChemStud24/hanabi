@@ -19,32 +19,31 @@ from hanabi_learning_environment import pyhanabi
 from utils import double_dummy_action
 import sys
 
+def print_state(state):
+  """Print some basic information about the state."""
+  print("")
+  print("Current player: {}".format(state.cur_player()))
+  print(state)
+
+  # Example of more queries to provide more about this state. For
+  # example, bots could use these methods to to get information
+  # about the state in order to act accordingly.
+  print("### Information about the state retrieved separately ###")
+  print("### Information tokens: {}".format(state.information_tokens()))
+  print("### Life tokens: {}".format(state.life_tokens()))
+  print("### Fireworks: {}".format(state.fireworks()))
+  print("### Deck size: {}".format(state.deck_size()))
+  print("### Discard pile: {}".format(str(state.discard_pile())))
+  print("### Player hands: {}".format(str(state.player_hands())))
+  print("")
+
+def print_observation(observation):
+  """Print some basic information about an agent observation."""
+  print("--- Observation ---")
+  print(observation)
 
 def run_game(game_parameters,iterations):
   """Play a game, selecting random actions."""
-
-  def print_state(state):
-    """Print some basic information about the state."""
-    print("")
-    print("Current player: {}".format(state.cur_player()))
-    print(state)
-
-    # Example of more queries to provide more about this state. For
-    # example, bots could use these methods to to get information
-    # about the state in order to act accordingly.
-    print("### Information about the state retrieved separately ###")
-    print("### Information tokens: {}".format(state.information_tokens()))
-    print("### Life tokens: {}".format(state.life_tokens()))
-    print("### Fireworks: {}".format(state.fireworks()))
-    print("### Deck size: {}".format(state.deck_size()))
-    print("### Discard pile: {}".format(str(state.discard_pile())))
-    print("### Player hands: {}".format(str(state.player_hands())))
-    print("")
-
-  def print_observation(observation):
-    """Print some basic information about an agent observation."""
-    print("--- Observation ---")
-    print(observation)
   
   game = pyhanabi.HanabiGame(game_parameters)
   cum_score = 0
@@ -63,9 +62,9 @@ def run_game(game_parameters,iterations):
     cum_score += state.score()
     if state.score() == game.num_colors()*game.num_ranks():
       perfects += 1
-  print(str(iterations) + " games completed.")
-  print("Average Score: " + str(cum_score/iterations))
-  print("Perfect Games: " + str(perfects/iterations*100) + "%")
+  # print(str(iterations) + " games completed.")
+  # print("Average Score: " + str(cum_score/iterations))
+  # print("Perfect Games: " + str(perfects/iterations*100) + "%")
 
 
 if __name__ == "__main__":
