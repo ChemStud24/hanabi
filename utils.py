@@ -17,7 +17,12 @@ def double_dummy_action(state):
 	# if I have a playable card, play it
 	for idx,card in enumerate(cur_hand):
 		if state.card_playable_on_fireworks(color_char_to_idx(card['color']),card['rank']):
-			return HanabiMove.get_play_move(idx)
+			move = HanabiMove.get_play_move(idx)
+			if move in state.legal_moves():
+				return move
+			else:
+				print(move)
+				print(state)
 
 	# if you have a playable card, I will give a random clue if allowed
 	if state.information_tokens() > 0:
@@ -30,14 +35,23 @@ def double_dummy_action(state):
 						# give the first clue
 						for move in state.legal_moves():
 							if move.type() == HanabiMoveType.REVEAL_COLOR or move.type() == HanabiMoveType.REVEAL_RANK:
-								return move
+								if move in state.legal_moves():
+									return move
+								else:
+									print(move)
+									print(state)
 
 	if discard_legal(state):
 
 		# if I have a discardable card, I will discard it
 		for idx,card in enumerate(cur_hand):
 			if is_discardable(card['color'],card['rank'],state):
-				return HanabiMove.get_discard_move(idx)
+				move = HanabiMove.get_discard_move(idx)
+				if move in state.legal_moves():
+					return move
+				else:
+					print(move)
+					print(state)
 
 		# if I have duplicates, I will discard one
 		# else, I will discard the highest card in my hand
@@ -46,13 +60,28 @@ def double_dummy_action(state):
 		high_idx = -1
 		for idx,card in enumerate(cur_hand):
 			if card in dups:
-				return HanabiMove.get_discard_move(idx)
+				move = HanabiMove.get_discard_move(idx)
+				if move in state.legal_moves():
+					return move
+				else:
+					print(move)
+					print(state)
 			else:
 				dups.append(card)
 				if card['rank'] > highest:
 					highest = card['rank']
 					high_idx = idx
-		return HanabiMove.get_discard_move(high_idx)
+		move = HanabiMove.get_discard_move(high_idx)
+		if move in state.legal_moves():
+			return move
+		else:
+			print(move)
+			print(state)
 
 	# an edge case where none of the above is true
-	return random.choice(state.legal_moves())
+	move = random.choice(state.legal_moves())
+	if move in state.legal_moves():
+		return move
+	else:
+		print(move)
+		print(state)

@@ -57,12 +57,8 @@ def run_game(game_parameters,iterations):
         state.deal_random_card()
         continue
 
-      try:
-        move = double_dummy_action(state)
-        state.apply_move(move)
-      except:
-        print(move)
-        print_state(state)
+      move = double_dummy_action(state)
+      state.apply_move(move)
     cum_score += state.score()
     if state.score() == game.num_colors()*game.num_ranks():
       perfects += 1
