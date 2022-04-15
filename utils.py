@@ -16,7 +16,7 @@ def double_dummy_action(state):
 
 	# if I have a playable card, play it
 	for idx,card in enumerate(cur_hand):
-		if state.card_playable_on_fireworks(card['color'],card['rank']):
+		if state.card_playable_on_fireworks(color_char_to_idx(card['color']),card['rank']):
 			return HanabiMove.get_play_move(idx)
 
 	# if you have a playable card, I will give a random clue if allowed
