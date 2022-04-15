@@ -22,7 +22,7 @@ def double_dummy_action(state):
 	# if you have a playable card, I will give a random clue if allowed
 	if state.information_tokens() > 0:
 		all_hands = state.player_hands()
-		for pid,hand in all_hands:
+		for pid,hand in enumerate(all_hands):
 			if pid != state.cur_player():
 				hand = (card.to_dict() for card in hand)
 				for idx,card in enumerate(hand):
