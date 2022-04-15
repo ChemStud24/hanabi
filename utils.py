@@ -1,4 +1,5 @@
 from hanabi_learning_environment.pyhanabi import color_char_to_idx, HanabiMove
+from hanabi_learning_environment.pyhanabi.HanabiMove import REVEAL_RANK,REVEAL_COLOR,DISCARD
 # from pyhanabi import color_char_to_idx, HanabiMove
 import random
 
@@ -7,7 +8,7 @@ def is_discardable(color,rank,state):
 
 def discard_legal(state):
 	for move in state.legal_moves():
-		if move.type() == HanabiMove.DISCARD:
+		if move.type() == DISCARD:
 			return True
 	return False
 
@@ -29,7 +30,7 @@ def double_dummy_action(state):
 					if state.card_playable_on_fireworks(color_char_to_idx(card['color']),card['rank']):
 						# give the first clue
 						for move in state.legal_moves():
-							if move.type() == HanabiMove.REVEAL_COLOR or move.type() == HanabiMove.REVEAL_RANK:
+							if move.type() == REVEAL_COLOR or move.type() == REVEAL_RANK:
 								return move
 
 	if discard_legal(state):
