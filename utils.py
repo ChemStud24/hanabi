@@ -54,5 +54,12 @@ def double_dummy_action(state):
 					high_idx = idx
 		return HanabiMove.get_discard_move(high_idx)
 
+	# if discarding is illegal (max info tokens) then give a clue
+	for move in state.legal_moves():
+		if move.type() == HanabiMoveType.REVEAL_COLOR or move.type() == HanabiMoveType.REVEAL_RANK:
+			return move
+
 	# an edge case where none of the above is true
+	# this should never happen
+	print("THIS IS REALLY BAD")
 	return random.choice(state.legal_moves())
