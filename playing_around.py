@@ -50,16 +50,26 @@ def run_game(game_parameters):
   print(game.parameter_string(), end="")
 
   state = game.new_initial_state()
+  state2 = game.new_initial_state()
   while not state.is_terminal():
     if state.cur_player() == pyhanabi.CHANCE_PLAYER_ID:
       state.deal_random_card()
+      state2.deal_random_card()
       continue
 
-    # print_state(state)
+    print_state(state)
+    print_state(state2)
 
-    other_state = state.copy()
-    print(other_state)
-    print(other_state._state.Deck())
+    hands = state.player_hands()
+    for pid,hand in enumerate(hands):
+      state2.set_hand(pid,hand)
+
+    print(state)
+    print(state2)
+    
+    # other_state = state.copy()
+    # print(other_state)
+    # print(other_state._state.Deck())
 
     observation = state.observation(state.cur_player())
     # print_observation(observation)
