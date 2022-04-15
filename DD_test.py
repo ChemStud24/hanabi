@@ -71,4 +71,4 @@ if __name__ == "__main__":
   # Check that the cdef and library were loaded from the standard paths.
   assert pyhanabi.cdef_loaded(), "cdef failed to load"
   assert pyhanabi.lib_loaded(), "lib failed to load"
-  run_game({"players": 2, "random_start_player": False, "colors":2},sys.argv[1])
+  run_game({"players": 2, "random_start_player": False, "colors":2},int(sys.argv[1]))
