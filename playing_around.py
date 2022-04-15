@@ -93,7 +93,7 @@ def run_game(game_parameters):
     # print("Chose random legal move: {}".format(move))
     print(move)
 
-    other_state.apply_move(move)
+    # other_state.apply_move(move)
 
   print("")
   print("Game done. Terminal state:")
