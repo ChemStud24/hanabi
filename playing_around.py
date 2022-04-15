@@ -60,7 +60,7 @@ def run_game(game_parameters):
     print_state(state)
     print_state(state2)
 
-    print(state.observation(1))
+    print(state.observation(1).observed_hands())
 
     hands = state.player_hands()
     for pid,hand in enumerate(hands):
