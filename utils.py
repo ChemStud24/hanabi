@@ -46,20 +46,9 @@ def double_dummy_action(state):
 		high_idx = -1
 		for idx,card in enumerate(cur_hand):
 			if card in dups:
-				move = HanabiMove.get_discard_move(idx)
-				if move in state.legal_moves():
-					return move
-				else:
-					print('dups')
-					print(state.legal_moves())
-					print(move)
-					print(state)
-					return move
+				return HanabiMove.get_discard_move(idx)
 			else:
 				dups.append(card)
-				print(card['rank'])
-				print(highest)
-				print(card['rank'] > highest)
 				if card['rank'] > highest:
 					highest = card['rank']
 					high_idx = idx
