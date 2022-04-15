@@ -60,12 +60,14 @@ def run_game(game_parameters):
     print_state(state)
     print_state(state2)
 
-    print(state.observation(1).observed_hands())
+    print(state.observation(1).observed_hands()[1])
 
-    hands = state.player_hands()
-    for pid,hand in enumerate(hands):
-      print(hand)
-      state2.set_hand(pid,hand)
+    # hands = state.player_hands()
+    # for pid,hand in enumerate(hands):
+    #   print(hand)
+    #   state2.set_hand(pid,hand)
+
+    state2.set_hand(1,state.observation(0).observed_hands[1])
 
     print(state)
     print(state2)
