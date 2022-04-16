@@ -68,12 +68,14 @@ def run_game(game_parameters,iterations):
   return cum_score/iterations
 
 def run_all_games(game_parameters):
+  print('start')
   game = pyhanabi.HanabiGame(game_parameters)
   cum_score = 0
   perfects = 0
 
 
   counter = 0
+  print(counter)
   init_state = game.new_initial_state()
   for state in all_worlds(game,init_state):
     while not state.is_terminal():
