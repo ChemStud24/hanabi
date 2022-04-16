@@ -81,7 +81,7 @@ def run_game(game_parameters):
     # print(other_state._state.Deck())
     """
 
-    if state.cur_player() > -1:
+    if state.cur_player() < -1:
       move = double_dummy_action(state)
     else:
       observation = state.observation(state.cur_player())
