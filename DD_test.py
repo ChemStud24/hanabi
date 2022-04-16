@@ -102,5 +102,6 @@ if __name__ == "__main__":
   assert pyhanabi.cdef_loaded(), "cdef failed to load"
   assert pyhanabi.lib_loaded(), "lib failed to load"
   # run_game({"players": 2, "random_start_player": False,"colors":int(sys.argv[2])},int(sys.argv[1]))
-  s = run_all_games({"players": 2, "random_start_player": False,"ranks":sys.argv[1],"colors":int(sys.argv[2])})
-  print("Final Score: " + str(s/(sys.argv[1]*sys.argv[2])))
+  r,c = int(sys.argv[1]),int(sys.argv[2])
+  s = run_all_games({"players": 2, "random_start_player": False,"ranks":r,"colors":c})
+  print("Final Score: " + str(s/(r*c)))
