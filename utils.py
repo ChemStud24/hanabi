@@ -49,17 +49,34 @@ def double_dummy_action(state):
 				return HanabiMove.get_discard_move(idx)
 			else:
 				dups.append(card)
-				if card['rank'] > highest:
+				# don't discard 5's because there is only 1 of each
+				if card['rank'] > highest and card['rank'] != 4:
 					highest = card['rank']
 					high_idx = idx
-		return HanabiMove.get_discard_move(high_idx)
+		if high_idx != -1:
+			return HanabiMove.get_discard_move(high_idx)
 
 	# if discarding is illegal (max info tokens) then give a clue
 	for move in state.legal_moves():
 		if move.type() == HanabiMoveType.REVEAL_COLOR or move.type() == HanabiMoveType.REVEAL_RANK:
 			return move
 
+	# if we declined to discard a 5 but there are no info tokens left
+	for move in state.legal_moves():
+		if move.type() == HanabiMoveType.DISCARD:
+			return move
+
 	# an edge case where none of the above is true
 	# this should never happen
 	print("THIS IS REALLY BAD")
 	return random.choice(state.legal_moves())
+
+def double_dummy_playout(state):
+	while not state.is_terminal():
+      if state.cur_player() == pyhanabi.CHANCE_PLAYER_ID:
+        state.deal_random_card()
+        continue
+
+      move = double_dummy_action(state)
+      state.apply_move(move)
+    return state.score()
