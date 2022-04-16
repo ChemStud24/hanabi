@@ -19,7 +19,7 @@ from __future__ import print_function
 import numpy as np
 from hanabi_learning_environment import pyhanabi
 from utils import double_dummy_action, possible_cards
-
+import sys
 
 def run_game(game_parameters):
   """Play a game, selecting random actions."""
@@ -83,8 +83,9 @@ def run_game(game_parameters):
     # print(other_state._state.Deck())
     """
 
-    if state.cur_player() < -1:
-      move = double_dummy_action(state)
+    if state.cur_player() == 1:
+      # move = double_dummy_action(state)
+      move = PIMC(game,state)
     else:
       observation = state.observation(state.cur_player())
       print_observation(observation)
@@ -115,4 +116,4 @@ if __name__ == "__main__":
   # Check that the cdef and library were loaded from the standard paths.
   assert pyhanabi.cdef_loaded(), "cdef failed to load"
   assert pyhanabi.lib_loaded(), "lib failed to load"
-  run_game({"players": 2, "random_start_player": False, "colors":2})
+  run_game({"players": 2, "random_start_player": False, "ranks": sys.argv[1], "colors": sys.argv[2]})

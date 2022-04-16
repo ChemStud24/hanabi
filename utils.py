@@ -1,6 +1,8 @@
+from hanabi_learning_environment import pyhanabi
 from hanabi_learning_environment.pyhanabi import color_char_to_idx, color_idx_to_char, HanabiMove, HanabiMoveType
 # from pyhanabi import color_char_to_idx, HanabiMove
 import random
+from itertools import permutations
 
 def is_discardable(color,rank,state):
 	return rank <= state.fireworks()[color_char_to_idx(color)]
@@ -92,15 +94,33 @@ def all_cards(game):
 
 def possible_cards(game,observation):
 	unseen_cards = list(all_cards(game))
-	print(len(unseen_cards))
 	[unseen_cards.remove(card.to_dict()) for hand in observation.observed_hands() for card in hand if card.rank() >= 0]
-	# seen_cards = [card.to_dict() for hand in observation.observed_hands() for card in hand if card.rank() >= 0]
 	[unseen_cards.remove(card.to_dict()) for card in observation.discard_pile()]
-	# seen_cards.extend(card.to_dict() for card in observation.discard_pile())
-	# for card in seen_cards:
-	# 	unseen_cards.remove(card)
-	print(len(unseen_cards))
 	return unseen_cards
+
+def possible(cards,observation):
+	# check if a set of cards in my hand is congruent with the information I have
+	my_knowledge = observation.card_knowledge()[0]
+	for c in range(len(cards)):
+		if my_knowledge[c].rank_plausible(cards[c]['rank']) and my_knowledge.color_plausible(color_char_to_idx(cards[c]['color'])):
+			continue
+		else:
+			return False
+	return True
 
 def all_worlds(game,state):
 	obs = state.observation(state.cur_player())
+	cards = possible_cards(game,obs)
+	my_hand_size = len(obs.observed_hands()[0])
+	possible_hands = permutations(cards,my_hand_size)
+	return [state.copy().set_hand(state.cur_player(),hand) for hand in possible_hands if possible(hand,obs)]
+
+def PIMC(game,state):
+	moves = state.legal_moves()
+	score = [0]*len(moves)
+	for m,move in enumerate(moves):
+		for w in all_worlds(game,state):
+			w.apply_move(move)
+			score[m] += double_dummy_playout(w)
+	# return the move with the max score
+	return max(zip(score,moves))[1]
