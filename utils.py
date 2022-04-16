@@ -74,8 +74,8 @@ def double_dummy_action(state):
 def double_dummy_playout(state):
 	while not state.is_terminal():
 		if state.cur_player() == pyhanabi.CHANCE_PLAYER_ID:
-		state.deal_random_card()
-		continue
+			state.deal_random_card()
+			continue
 
 		move = double_dummy_action(state)
 		state.apply_move(move)
