@@ -82,8 +82,8 @@ def double_dummy_playout(state):
 	return state.score()
 
 def all_cards(game):
-	for c in game.num_colors():
-		for r in game.num_ranks():
+	for c in range(game.num_colors()):
+		for r in range(game.num_ranks()):
 			yield {'color':color_idx_to_char(c),'rank':r}
 			if r != game.num_ranks()-1:
 				yield {'color':color_idx_to_char(c),'rank':r}
