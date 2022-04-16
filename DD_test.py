@@ -72,13 +72,16 @@ def run_all_games(game_parameters):
   cum_score = 0
   perfects = 0
 
+
+  counter = 0
   init_state = game.new_initial_state()
   for state in all_worlds(game,init_state):
     while not state.is_terminal():
       if state.cur_player() == pyhanabi.CHANCE_PLAYER_ID:
         state.deal_random_card()
         continue
-
+      counter += 1
+      print(counter)
       move = double_dummy_action(state)
       state.apply_move(move)
     # print(state)
