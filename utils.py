@@ -90,5 +90,16 @@ def all_cards(game):
 			if r == 0:
 				yield {'color':color_idx_to_char(c),'rank':r}
 
+def possible_cards(game,observation):
+	unseen_cards = list(all_cards(game))
+	print(unseen_cards)
+	seen_cards = [card.to_dict() for hand in observation.observed_hands() for card in hand]
+	print(seen_cards)
+	seen_cards.extend(card.to_dict() for card in observation.discard_pile())
+	print(seen_cards)
+	(unseen_cards.remove(card) for card in seen_cards)
+	print(unseen_cards)
+	return unseen_cards
+
 def all_worlds(game,state):
 	obs = state.observation(state.cur_player())
