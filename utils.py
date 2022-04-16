@@ -113,7 +113,14 @@ def all_worlds(game,state):
 	cards = possible_cards(game,obs)
 	my_hand_size = len(obs.observed_hands()[0])
 	possible_hands = permutations(cards,my_hand_size)
-	return [state.copy().set_hand(state.cur_player(),hand) for hand in possible_hands if possible(hand,obs)]
+	worlds = []
+	for hand in possible_hands:
+		if possible(hand,obs):
+			worlds.append(state.copy())
+			worlds[-1].set_hand(state.cur_player(),hand)
+	# worlds = [state.copy().set_hand(state.cur_player(),hand) for hand in possible_hands if possible(hand,obs)]
+	# print(worlds)
+	return worlds
 
 def PIMC(game,state):
 	moves = state.legal_moves()
