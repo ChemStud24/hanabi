@@ -111,13 +111,16 @@ def possible(cards,observation):
 def all_worlds(game,state):
 	obs = state.observation(state.cur_player())
 	cards = possible_cards(game,obs)
+	print(cards)
 	my_hand_size = len(obs.observed_hands()[0])
+	print(my_hand_size)
 	possible_hands = permutations(cards,my_hand_size)
 	worlds = []
 	for hand in possible_hands:
 		if possible(hand,obs):
 			worlds.append(state.copy())
 			worlds[-1].set_hand(state.cur_player(),hand)
+	print(worlds)
 	return worlds
 
 def PIMC(game,state):
