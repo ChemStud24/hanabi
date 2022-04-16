@@ -97,7 +97,8 @@ def possible_cards(game,observation):
 	print(len(seen_cards))
 	seen_cards.extend(card.to_dict() for card in observation.discard_pile())
 	print(len(seen_cards))
-	(unseen_cards.remove(card) for card in seen_cards)
+	for card in seen_cards:
+		unseen_cards.remove(card)
 	print(len(unseen_cards))
 	return unseen_cards
 
