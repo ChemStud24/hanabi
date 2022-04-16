@@ -79,4 +79,4 @@ def double_dummy_playout(state):
 
 		move = double_dummy_action(state)
 		state.apply_move(move)
-    return state.score()
+	return state.score()
