@@ -78,28 +78,30 @@ def run_all_games(game_parameters):
   while init_state.cur_player() == pyhanabi.CHANCE_PLAYER_ID:
     init_state.deal_random_card()
 
+  games = 0
   # enumerate all possible worlds
   for state in all_worlds(game,init_state):
     while not state.is_terminal():
       if state.cur_player() == pyhanabi.CHANCE_PLAYER_ID:
         state.deal_random_card()
         continue
-      counter += 1
-      print(counter)
       move = double_dummy_action(state)
       state.apply_move(move)
     # print(state)
     cum_score += state.score()
+    games += 1
+    print("Average Score = " + str(cum_score/games))
     if state.score() == game.num_colors()*game.num_ranks():
       perfects += 1
   # print(str(iterations) + " games completed.")
   # print("Average Score: " + str(cum_score/iterations))
   # print("Perfect Games: " + str(perfects/iterations*100) + "%")
-  return cum_score/iterations
+  return cum_score/games
 
 if __name__ == "__main__":
   # Check that the cdef and library were loaded from the standard paths.
   assert pyhanabi.cdef_loaded(), "cdef failed to load"
   assert pyhanabi.lib_loaded(), "lib failed to load"
   # run_game({"players": 2, "random_start_player": False,"colors":int(sys.argv[2])},int(sys.argv[1]))
-  run_all_games({"players": 2, "random_start_player": False,"ranks":sys.argv[1],"colors":int(sys.argv[2])})
+  s = run_all_games({"players": 2, "random_start_player": False,"ranks":sys.argv[1],"colors":int(sys.argv[2])})
+  print("Final Score: " + str(s/(sys.argv[1]*sys.argv[2])))
