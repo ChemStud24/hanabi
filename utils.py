@@ -19,7 +19,7 @@ def double_dummy_action(state,max_rank=None):
 	# if I have a playable card, play it
 	for idx,card in enumerate(cur_hand):
 		if state.card_playable_on_fireworks(color_char_to_idx(card['color']),card['rank']):
-			print('playable')
+			# print('playable')
 			return HanabiMove.get_play_move(idx)
 
 	# if you have a playable card, I will give a random clue if allowed
@@ -33,7 +33,7 @@ def double_dummy_action(state,max_rank=None):
 						# give the first clue
 						for move in state.legal_moves():
 							if move.type() == HanabiMoveType.REVEAL_COLOR or move.type() == HanabiMoveType.REVEAL_RANK:
-								print('clue playable')
+								# print('clue playable')
 								return move
 
 	if discard_legal(state):
@@ -41,7 +41,7 @@ def double_dummy_action(state,max_rank=None):
 		# if I have a discardable card, I will discard it
 		for idx,card in enumerate(cur_hand):
 			if is_discardable(card['color'],card['rank'],state):
-				print('discard')
+				# print('discard')
 				return HanabiMove.get_discard_move(idx)
 
 		# if I have duplicates, I will discard one
@@ -51,7 +51,7 @@ def double_dummy_action(state,max_rank=None):
 		high_idx = -1
 		for idx,card in enumerate(cur_hand):
 			if card in dups:
-				print('duplicate')
+				# print('duplicate')
 				return HanabiMove.get_discard_move(idx)
 			else:
 				dups.append(card)
@@ -60,19 +60,19 @@ def double_dummy_action(state,max_rank=None):
 					highest = card['rank']
 					high_idx = idx
 		if high_idx != -1:
-			print('high')
+			# print('high')
 			return HanabiMove.get_discard_move(high_idx)
 
 	# if discarding is illegal (max info tokens) then give a clue
 	for move in state.legal_moves():
 		if move.type() == HanabiMoveType.REVEAL_COLOR or move.type() == HanabiMoveType.REVEAL_RANK:
-			print('clue random')
+			# print('clue random')
 			return move
 
 	# if we declined to discard a 5 (max rank) but there are no info tokens left
 	for move in state.legal_moves():
 		if move.type() == HanabiMoveType.DISCARD:
-			print('discard random')
+			# print('discard random')
 			return move
 
 	# an edge case where none of the above is true
