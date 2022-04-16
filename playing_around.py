@@ -58,6 +58,8 @@ def run_game(game_parameters):
       # state2.deal_random_card()
       continue
 
+    print(possible_cards(game,state.observation(state.cur_player())))
+
     """
     print_state(state)
     print_state(state2)
@@ -100,8 +102,6 @@ def run_game(game_parameters):
     print(move)
 
     state.apply_move(move)
-
-    print(possible_cards(game,state.observation()))
 
   print("")
   print("Game done. Terminal state:")
