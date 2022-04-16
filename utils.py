@@ -5,6 +5,9 @@ import random
 from itertools import permutations
 
 def is_discardable(color,rank,state):
+	print(state.fireworks())
+	print(color)
+	print(color_char_to_idx(color))
 	return rank <= state.fireworks()[color_char_to_idx(color)]
 
 def discard_legal(state):
