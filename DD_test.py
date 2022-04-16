@@ -16,7 +16,7 @@ from __future__ import print_function
 
 import numpy as np
 from hanabi_learning_environment import pyhanabi
-from utils import double_dummy_action
+from utils import double_dummy_action, all_worlds
 import sys
 
 def print_state(state):
