@@ -118,8 +118,6 @@ def all_worlds(game,state):
 		if possible(hand,obs):
 			worlds.append(state.copy())
 			worlds[-1].set_hand(state.cur_player(),hand)
-	# worlds = [state.copy().set_hand(state.cur_player(),hand) for hand in possible_hands if possible(hand,obs)]
-	# print(worlds)
 	return worlds
 
 def PIMC(game,state):
@@ -129,5 +127,6 @@ def PIMC(game,state):
 		for w in all_worlds(game,state):
 			w.apply_move(move)
 			score[m] += double_dummy_playout(w)
+			print(socre[m])
 	# return the move with the max score
 	return max(zip(score,moves))[1]
