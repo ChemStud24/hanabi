@@ -102,7 +102,7 @@ def possible(cards,observation):
 	# check if a set of cards in my hand is congruent with the information I have
 	my_knowledge = observation.card_knowledge()[0]
 	for c in range(len(cards)):
-		if my_knowledge[c].rank_plausible(cards[c]['rank']) and my_knowledge.color_plausible(color_char_to_idx(cards[c]['color'])):
+		if my_knowledge[c].rank_plausible(cards[c]['rank']) and my_knowledge[c].color_plausible(color_char_to_idx(cards[c]['color'])):
 			continue
 		else:
 			return False
