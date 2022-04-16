@@ -127,6 +127,6 @@ def PIMC(game,state):
 		for w in all_worlds(game,state):
 			w.apply_move(move)
 			score[m] += double_dummy_playout(w)
-			print(socre[m])
+			print(score[m])
 	# return the move with the max score
 	return max(zip(score,moves))[1]
