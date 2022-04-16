@@ -1,4 +1,4 @@
-from hanabi_learning_environment.pyhanabi import color_char_to_idx, HanabiMove, HanabiMoveType
+from hanabi_learning_environment.pyhanabi import color_char_to_idx, color_idx_to_char, HanabiMove, HanabiMoveType
 # from pyhanabi import color_char_to_idx, HanabiMove
 import random
 
@@ -11,7 +11,7 @@ def discard_legal(state):
 			return True
 	return False
 
-def double_dummy_action(state):
+def double_dummy_action(state,max_rank=None):
 	cur_hand = [card.to_dict() for card in state.player_hands()[state.cur_player()]]
 
 	# if I have a playable card, play it
@@ -49,8 +49,8 @@ def double_dummy_action(state):
 				return HanabiMove.get_discard_move(idx)
 			else:
 				dups.append(card)
-				# don't discard 5's because there is only 1 of each
-				if card['rank'] > highest and card['rank'] != 4:
+				# if given, don't discard the max rank because there is only 1 of each
+				if card['rank'] > highest and card['rank'] != max_rank:
 					highest = card['rank']
 					high_idx = idx
 		if high_idx != -1:
@@ -61,7 +61,7 @@ def double_dummy_action(state):
 		if move.type() == HanabiMoveType.REVEAL_COLOR or move.type() == HanabiMoveType.REVEAL_RANK:
 			return move
 
-	# if we declined to discard a 5 but there are no info tokens left
+	# if we declined to discard a 5 (max rank) but there are no info tokens left
 	for move in state.legal_moves():
 		if move.type() == HanabiMoveType.DISCARD:
 			return move
@@ -80,3 +80,15 @@ def double_dummy_playout(state):
 		move = double_dummy_action(state)
 		state.apply_move(move)
 	return state.score()
+
+def all_cards(game):
+	for c in game.num_colors():
+		for r in game.num_ranks():
+			yield {'color':color_idx_to_char(c),'rank':r}
+			if r != game.num_ranks()-1:
+				yield {'color':color_idx_to_char(c),'rank':r}
+			if r == 0:
+				yield {'color':color_idx_to_char(c),'rank':r}
+
+def all_worlds(game,state):
+	obs = state.observation(state.cur_player())
