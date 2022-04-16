@@ -109,7 +109,9 @@ def possible(cards,observation):
 	return True
 
 def all_worlds(game,state):
+	print('function')
 	obs = state.observation(state.cur_player())
+	print(obs)
 	cards = possible_cards(game,obs)
 	print(cards)
 	my_hand_size = len(obs.observed_hands()[0])
