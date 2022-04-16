@@ -75,8 +75,8 @@ def run_all_games(game_parameters):
 
   # initialize the state
   init_state = game.new_initial_state()
-  while state.cur_player() == pyhanabi.CHANCE_PLAYER_ID:
-    state.deal_random_card()
+  while init_state.cur_player() == pyhanabi.CHANCE_PLAYER_ID:
+    init_state.deal_random_card()
 
   # enumerate all possible worlds
   for state in all_worlds(game,init_state):
