@@ -18,7 +18,7 @@ from __future__ import print_function
 
 import numpy as np
 from hanabi_learning_environment import pyhanabi
-from utils import double_dummy_action, possible_cards
+from utils import double_dummy_action, possible_cards, PIMC
 import sys
 
 def run_game(game_parameters):
@@ -58,7 +58,7 @@ def run_game(game_parameters):
       # state2.deal_random_card()
       continue
 
-    print(possible_cards(game,state.observation(state.cur_player())))
+    # print(possible_cards(game,state.observation(state.cur_player())))
 
     """
     print_state(state)
