@@ -18,7 +18,7 @@ from __future__ import print_function
 
 import numpy as np
 from hanabi_learning_environment import pyhanabi
-from utils import double_dummy_action
+from utils import double_dummy_action, possible_cards
 
 
 def run_game(game_parameters):
@@ -100,6 +100,8 @@ def run_game(game_parameters):
     print(move)
 
     state.apply_move(move)
+
+    print(possible_cards(game,state.observation()))
 
   print("")
   print("Game done. Terminal state:")
