@@ -5,9 +5,6 @@ import random
 from itertools import permutations
 
 def is_discardable(color,rank,state):
-	print(state.fireworks())
-	print(color)
-	print(color_char_to_idx(color))
 	return rank <= state.fireworks()[color_char_to_idx(color)]
 
 def discard_legal(state):
@@ -154,10 +151,7 @@ def PIMC(game,state,k=None):
 
 	for m,move in enumerate(moves):
 		for w in all_worlds(game,state):
-			print(w)
 			w.apply_move(move)
-			print(move)
 			score[m] += double_dummy_playout(w)
-			print(score[m])
 	# return the move with the max score
 	return max(zip(score,moves))[1]

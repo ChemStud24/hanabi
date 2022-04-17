@@ -76,13 +76,13 @@ def run_all_games(game_parameters):
   init_state = game.new_initial_state()
   while init_state.cur_player() == pyhanabi.CHANCE_PLAYER_ID:
     init_state.deal_random_card()
-  print(init_state)
-  print(init_state.fireworks())
+  # print(init_state)
+  # print(init_state.fireworks())
   games = 0
   # enumerate all possible worlds
   for state in all_worlds(game,init_state):
-    if len(state.fireworks()) != game_parameters['colors']:
-      print(state)
+    # if len(state.fireworks()) != game_parameters['colors']:
+    #   print(state)
     while not state.is_terminal():
       if state.cur_player() == pyhanabi.CHANCE_PLAYER_ID:
         state.deal_random_card()
