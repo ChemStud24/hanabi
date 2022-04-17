@@ -94,7 +94,7 @@ def run_all_games(game_parameters):
     # print(state)
     cum_score += state.score()
     games += 1
-    print("Average Score = " + str(cum_score/games))
+    print("Games: " + str(games) + "\tAverage Score = " + str(cum_score/games))
     if state.score() == game.num_colors()*game.num_ranks():
       perfects += 1
   # print(str(iterations) + " games completed.")
