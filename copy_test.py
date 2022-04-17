@@ -9,7 +9,7 @@ from hanabi_learning_environment.pyhanabi import HanabiGame
 for r in range(1,6):
 	for c in range(1,6):
 		ncards = 2*r*c
-		if ncards < 10 or (r == 2 and c == 3) or (r == 3 and c == 2) or (r == 3 and c == 3):
+		if ncards < 10 or (r == 2 and c == 3) or (r == 3 and c == 2) or (r == 3 and c == 3) or (r == 4 and c == 2):
 			continue
 		print("Colors: " + str(c))
 		print("Ranks: " + str(r))
