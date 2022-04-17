@@ -17,5 +17,8 @@ for r in range(1,6):
 		s1 = g.new_initial_state()
 		print(s1.fireworks())
 		s2 = s1.copy()
-		print(s2.fireworks())
+		try:
+			print(s2.fireworks())
+		except:
+			print("Core Dumped :/")
 		print("")
