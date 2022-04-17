@@ -89,8 +89,8 @@ def run_all_games(game_parameters):
         continue
       move = double_dummy_action(state)
       state.apply_move(move)
-      print(state)
-      print(state.fireworks())
+      # print(state)
+      # print(state.fireworks())
     # print(state)
     cum_score += state.score()
     games += 1
