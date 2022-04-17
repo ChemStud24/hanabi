@@ -9,7 +9,7 @@ if __name__ == "__main__":
   # assert pyhanabi.lib_loaded(), "lib failed to load"
 
 
-  iterations = sys.argv[1]
+  iterations = int(sys.argv[1])
   for r in range(1,6):
   	for c in range(1,6):
   		ncards = 2*r*c
