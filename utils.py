@@ -93,6 +93,12 @@ def double_dummy_playout(state):
 		state.apply_move(move)
 	return state.score()
 
+def fireworkds_2_cards(fireworks):
+	cards = []
+	for c,r in enumerate(fireworks):
+		cards.extend({'color':color_idx_to_char(c),'rank':rank} for rank in range(r))
+	return cards
+
 def all_cards(game):
 	for c in range(game.num_colors()):
 		for r in range(game.num_ranks()):
@@ -103,9 +109,11 @@ def all_cards(game):
 				yield {'color':color_idx_to_char(c),'rank':r}
 
 def possible_cards(game,observation):
+	# TODO remove firework cards
 	unseen_cards = list(all_cards(game))
 	[unseen_cards.remove(card.to_dict()) for hand in observation.observed_hands() for card in hand if card.rank() >= 0]
 	[unseen_cards.remove(card.to_dict()) for card in observation.discard_pile()]
+	[unseen_cards.remove(card) for card in fireworkds_2_cards(observation.fireworks())]
 	return unseen_cards
 
 def possible(cards,observation):
@@ -130,9 +138,20 @@ def all_worlds(game,state):
 			worlds[-1].set_hand(state.cur_player(),hand)
 	return worlds
 
-def PIMC(game,state):
+def k_worlds(game,state,k):
+	obs = state.observation(state.cur_player())
+	cards = possible_cards(game,obs)
+	my_hand_size = len(obs.observed_hands()[0])
+	possible_hands = permutations(cards,my_hand_size)
+	hands = random.choices()
+
+def PIMC(game,state,k=None):
 	moves = state.legal_moves()
 	score = [0]*len(moves)
+
+	if k == None:
+		worlds = all_worlds(game,state)
+
 	for m,move in enumerate(moves):
 		for w in all_worlds(game,state):
 			print(w)

@@ -1,6 +1,7 @@
 from DD_test import run_game
 from itertools import permutations
 from time import time
+import sys
 
 if __name__ == "__main__":
   # # Check that the cdef and library were loaded from the standard paths.
@@ -8,7 +9,7 @@ if __name__ == "__main__":
   # assert pyhanabi.lib_loaded(), "lib failed to load"
 
 
-  iterations = 10000
+  iterations = sys.argv[1]
   for r in range(1,6):
   	for c in range(1,6):
   		ncards = 2*r*c
