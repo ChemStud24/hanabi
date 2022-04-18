@@ -135,7 +135,6 @@ def all_worlds(game,state):
 		if possible(hand,obs):
 			worlds.append(state.copy())
 			worlds[-1].set_hand(state.cur_player(),hand)
-			break
 	return worlds
 
 def k_worlds(game,state,k):
