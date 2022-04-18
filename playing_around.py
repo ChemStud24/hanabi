@@ -21,98 +21,115 @@ from hanabi_learning_environment import pyhanabi
 from utils import double_dummy_action, possible_cards, PIMC
 import sys
 
-def run_game(game_parameters):
+def print_state(state):
+  """Print some basic information about the state."""
+  print("")
+  print("Current player: {}".format(state.cur_player()))
+  print(state)
+
+  # Example of more queries to provide more about this state. For
+  # example, bots could use these methods to to get information
+  # about the state in order to act accordingly.
+  print("### Information about the state retrieved separately ###")
+  print("### Information tokens: {}".format(state.information_tokens()))
+  print("### Life tokens: {}".format(state.life_tokens()))
+  print("### Fireworks: {}".format(state.fireworks()))
+  print("### Deck size: {}".format(state.deck_size()))
+  print("### Discard pile: {}".format(str(state.discard_pile())))
+  print("### Player hands: {}".format(str(state.player_hands())))
+  print("")
+
+def print_observation(observation):
+  """Print some basic information about an agent observation."""
+  print("--- Observation ---")
+  print(observation)
+
+def run_game(game_parameters,iterations=1):
   """Play a game, selecting random actions."""
-
-  def print_state(state):
-    """Print some basic information about the state."""
-    print("")
-    print("Current player: {}".format(state.cur_player()))
-    print(state)
-
-    # Example of more queries to provide more about this state. For
-    # example, bots could use these methods to to get information
-    # about the state in order to act accordingly.
-    print("### Information about the state retrieved separately ###")
-    print("### Information tokens: {}".format(state.information_tokens()))
-    print("### Life tokens: {}".format(state.life_tokens()))
-    print("### Fireworks: {}".format(state.fireworks()))
-    print("### Deck size: {}".format(state.deck_size()))
-    print("### Discard pile: {}".format(str(state.discard_pile())))
-    print("### Player hands: {}".format(str(state.player_hands())))
-    print("")
-
-  def print_observation(observation):
-    """Print some basic information about an agent observation."""
-    print("--- Observation ---")
-    print(observation)
     
   game = pyhanabi.HanabiGame(game_parameters)
-  print(game.parameter_string(), end="")
+  # print(game.parameter_string(), end="")
+  cum_score, perfects = 0, 0
 
-  state = game.new_initial_state()
-  # state2 = game.new_initial_state()
-  while not state.is_terminal():
-    if state.cur_player() == pyhanabi.CHANCE_PLAYER_ID:
-      state.deal_random_card()
-      # state2.deal_random_card()
-      continue
+  for i in range(iterations):
+    state = game.new_initial_state()
+    # state2 = game.new_initial_state()
+    while not state.is_terminal():
+      if state.cur_player() == pyhanabi.CHANCE_PLAYER_ID:
+        state.deal_random_card()
+        # state2.deal_random_card()
+        continue
 
-    # print(possible_cards(game,state.observation(state.cur_player())))
+      # print(possible_cards(game,state.observation(state.cur_player())))
 
-    """
-    print_state(state)
-    print_state(state2)
+      """
+      print_state(state)
+      print_state(state2)
 
-    # print(state.observation(1).observed_hands()[1])
-    print((card.to_dict() for card in state.observation(0).observed_hands()[1]))
+      # print(state.observation(1).observed_hands()[1])
+      print((card.to_dict() for card in state.observation(0).observed_hands()[1]))
 
-    # hands = state.player_hands()
-    # for pid,hand in enumerate(hands):
-    #   print(hand)
-    #   state2.set_hand(pid,hand)
+      # hands = state.player_hands()
+      # for pid,hand in enumerate(hands):
+      #   print(hand)
+      #   state2.set_hand(pid,hand)
 
-    state2.set_hand(1,(card.to_dict() for card in state.observation(0).observed_hands()[1]))
-    # state2.set_hand(1,state.observation(1).observed_hands()[1])
+      state2.set_hand(1,(card.to_dict() for card in state.observation(0).observed_hands()[1]))
+      # state2.set_hand(1,state.observation(1).observed_hands()[1])
 
-    print(state)
-    print(state2)
+      print(state)
+      print(state2)
 
-    # other_state = state.copy()
-    # print(other_state)
-    # print(other_state._state.Deck())
-    """
-    if state.cur_player() == 1:
-      # move = double_dummy_action(state)
-      move = PIMC(game,state)
-    else:
-      observation = state.observation(state.cur_player())
-      print_observation(observation)
+      # other_state = state.copy()
+      # print(other_state)
+      # print(other_state._state.Deck())
+      """
+      if state.cur_player() > -1:
+        # move = double_dummy_action(state)
+        move = PIMC(game,state)
+      else:
+        observation = state.observation(state.cur_player())
+        print_observation(observation)
 
-      legal_moves = state.legal_moves()
-      print("")
-      print("Number of legal moves: {}".format(len(legal_moves)))
-      print("Legal moves:")
-      print('\n'.join(str(i) + ": " + str(m) for i,m in enumerate(legal_moves)))
-      move_idx = int(input('Whats is your move?'))
-      move = legal_moves[move_idx]
-      # move = np.random.choice(legal_moves)
-      # print("Chose random legal move: {}".format(move))
+        legal_moves = state.legal_moves()
+        print("")
+        print("Number of legal moves: {}".format(len(legal_moves)))
+        print("Legal moves:")
+        print('\n'.join(str(i) + ": " + str(m) for i,m in enumerate(legal_moves)))
+        move_idx = int(input('Whats is your move?'))
+        move = legal_moves[move_idx]
+        # move = np.random.choice(legal_moves)
+        # print("Chose random legal move: {}".format(move))
 
-    print(move)
+      # print(move)
 
-    state.apply_move(move)
+      state.apply_move(move)
 
-  print("")
-  print("Game done. Terminal state:")
-  print("")
-  print(state)
-  print("")
-  print("score: {}".format(state.score()))
+    # print("")
+    # print("Game done. Terminal state:")
+    # print("")
+    # print(state)
+    # print("")
+    # print("score: {}".format(state.score()))
+    cum_score += state.score()
+    if state.score() == game.num_colors()*game.num_ranks():
+      perfects += 1
+  return cum_score/iterations
 
 
 if __name__ == "__main__":
   # Check that the cdef and library were loaded from the standard paths.
   assert pyhanabi.cdef_loaded(), "cdef failed to load"
   assert pyhanabi.lib_loaded(), "lib failed to load"
-  run_game({"players": 2, "random_start_player": False, "ranks": sys.argv[1], "colors": sys.argv[2]})
+  # run_game({"players": 2, "random_start_player": False, "ranks": sys.argv[1], "colors": sys.argv[2]})
+  r,c,iterations = int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3])
+  for r in range(1,6):
+    for c in range(1,6):
+      ncards = 2*r*c
+      if ncards < 10:
+        continue
+      nworlds = len(list(permutations(range(ncards-5),5)))
+      # t0 = time()
+      score = run_game({"players": 2, "random_start_player": False,"colors":c,"ranks":r},iterations)
+      # t = time() - t0
+      print("Ranks: " + str(r) + "\tColors: " + str(c) + "\tScore: " + str(score/(r*c)))
