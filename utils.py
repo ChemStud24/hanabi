@@ -92,7 +92,7 @@ def double_dummy_playout(state):
 		state.apply_move(move)
 	return state.score()
 
-def fireworkds_2_cards(fireworks):
+def fireworks_2_cards(fireworks):
 	cards = []
 	for c,r in enumerate(fireworks):
 		cards.extend({'color':color_idx_to_char(c),'rank':rank} for rank in range(r))
@@ -112,7 +112,11 @@ def possible_cards(game,observation):
 	unseen_cards = list(all_cards(game))
 	[unseen_cards.remove(card.to_dict()) for hand in observation.observed_hands() for card in hand if card.rank() >= 0]
 	[unseen_cards.remove(card.to_dict()) for card in observation.discard_pile()]
-	[unseen_cards.remove(card) for card in fireworkds_2_cards(observation.fireworks())]
+	print(unseen_cards)
+	print(observation.fireworks())
+	for card in fireworks_2_cards(observation.fireworks()):
+		print(card)
+	[unseen_cards.remove(card) for card in fireworks_2_cards(observation.fireworks())]
 	return unseen_cards
 
 def possible(cards,observation):
