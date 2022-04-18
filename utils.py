@@ -165,7 +165,7 @@ def PIMC(game,state,k=None):
 			print("PIMC")
 			print(w.player_hands())
 			print(w.cur_player())
-			print(w.observation().observed_hands(w.cur_player()))
+			print(w.observation(w.cur_player()).observed_hands())
 			# print(move)
 			# print(w.legal_moves())
 			w.apply_move(move)
