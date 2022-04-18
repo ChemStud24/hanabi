@@ -164,6 +164,7 @@ def PIMC(game,state,k=None):
 		for w in all_worlds(game,state):
 			print("PIMC")
 			print(move)
+			print(w.cur_player())
 			w.apply_move(move)
 			print('got here')
 			score[m] += double_dummy_playout(w)
