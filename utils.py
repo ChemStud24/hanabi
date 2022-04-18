@@ -174,5 +174,6 @@ def PIMC(game,state,k=None):
 			w.apply_move(move)
 			# print('got here')
 			score[m] += double_dummy_playout(w)
+			break
 	# return the move with the max score
 	return max(zip(score,moves))[1]
