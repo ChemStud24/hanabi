@@ -87,6 +87,8 @@ def double_dummy_playout(state):
 			continue
 
 		move = double_dummy_action(state)
+		print('DD')
+		print(move)
 		state.apply_move(move)
 	return state.score()
 
@@ -140,7 +142,14 @@ def k_worlds(game,state,k):
 	cards = possible_cards(game,obs)
 	my_hand_size = len(obs.observed_hands()[0])
 	possible_hands = permutations(cards,my_hand_size)
-	hands = random.choices()
+	worlds = []
+	for hand in possible_hands:
+		if possible(hand,obs):
+			worlds.append(state.copy())
+			worlds[-1].set_hand(state.cur_player(),hand)
+		if len(worlds) >= k:
+			break
+	return worlds
 
 def PIMC(game,state,k=None):
 	moves = state.legal_moves()
@@ -148,9 +157,13 @@ def PIMC(game,state,k=None):
 
 	if k == None:
 		worlds = all_worlds(game,state)
+	else:
+		worlds = k_worlds(game,state,k)
 
 	for m,move in enumerate(moves):
 		for w in all_worlds(game,state):
+			print("PIMC")
+			print(move)
 			w.apply_move(move)
 			score[m] += double_dummy_playout(w)
 	# return the move with the max score
