@@ -111,7 +111,7 @@ def run_game(game_parameters,iterations=1):
     # print(state)
     # print("")
     # print("score: {}".format(state.score()))
-    print("Game: " + str(i) + "\tScore: " + state.score())
+    print("Game: " + str(i) + "\tScore: " + str(state.score()))
     cum_score += state.score()
     if state.score() == game.num_colors()*game.num_ranks():
       perfects += 1
