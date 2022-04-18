@@ -167,8 +167,8 @@ def PIMC(game,state,k=None):
 			score[m] += double_dummy_playout(w)
 	# return the move with the max score
 	i = max((x,i) for i,x in enumerate(score))[1]
-	print(score)
-	print(moves)
-	print(i)
+	# print(score)
+	# print(moves)
+	# print(i)
 	return moves[i]
 	# return max(zip(score,moves))[1]
