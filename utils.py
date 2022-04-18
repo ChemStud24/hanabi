@@ -108,7 +108,6 @@ def all_cards(game):
 				yield {'color':color_idx_to_char(c),'rank':r}
 			if game.num_ranks() == 1:
 				yield {'color':color_idx_to_char(c),'rank':r}
-				yield {'color':color_idx_to_char(c),'rank':r}
 
 def possible_cards(game,observation):
 	# TODO remove firework cards
