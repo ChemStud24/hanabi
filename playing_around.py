@@ -122,7 +122,8 @@ if __name__ == "__main__":
   assert pyhanabi.cdef_loaded(), "cdef failed to load"
   assert pyhanabi.lib_loaded(), "lib failed to load"
   # run_game({"players": 2, "random_start_player": False, "ranks": sys.argv[1], "colors": sys.argv[2]})
-  r,c,iterations = int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3])
+  # r,c,iterations = int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3])
+  iterations = int(sys.argv[1])
   for r in range(1,6):
     for c in range(1,6):
       ncards = 2*r*c
