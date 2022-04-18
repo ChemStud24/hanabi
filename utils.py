@@ -126,19 +126,15 @@ def possible(cards,observation):
 	return True
 
 def all_worlds(game,state):
-	print(state.cur_player())
 	obs = state.observation(state.cur_player())
 	cards = possible_cards(game,obs)
 	my_hand_size = len(obs.observed_hands()[0])
 	possible_hands = permutations(cards,my_hand_size)
 	worlds = []
-	print(state.cur_player())
 	for hand in possible_hands:
 		if possible(hand,obs):
 			worlds.append(state.copy())
-			print(worlds[-1].cur_player())
 			worlds[-1].set_hand(state.cur_player(),hand)
-			print(worlds[-1].cur_player())
 			break
 	return worlds
 
@@ -157,9 +153,7 @@ def k_worlds(game,state,k):
 	return worlds
 
 def PIMC(game,state,k=None):
-	print(state.cur_player())
 	moves = state.legal_moves()
-	print(state.cur_player())
 	score = [0]*len(moves)
 
 	if k == None:
@@ -169,16 +163,9 @@ def PIMC(game,state,k=None):
 
 	for m,move in enumerate(moves):
 		for w in all_worlds(game,state):
-			print(w.cur_player())
-			# print("PIMC")
-			# print(w.player_hands())
-			# print(w.cur_player())
-			# print(w.observation(w.cur_player()).observed_hands())
-			# print(move)
-			# print(w.legal_moves())
 			w.apply_move(move)
-			# print('got here')
 			score[m] += double_dummy_playout(w)
-			break
 	# return the move with the max score
-	return max(zip(score,moves))[1]
+	i = max((x,i) for x,i in enumerate(score))
+	return moves[i]
+	# return max(zip(score,moves))[1]
