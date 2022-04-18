@@ -112,15 +112,8 @@ def all_cards(game):
 def possible_cards(game,observation):
 	# TODO remove firework cards
 	unseen_cards = list(all_cards(game))
-	print("all: ",unseen_cards)
 	[unseen_cards.remove(card.to_dict()) for hand in observation.observed_hands() for card in hand if card.rank() >= 0]
-	print("hand: ",unseen_cards)
 	[unseen_cards.remove(card.to_dict()) for card in observation.discard_pile()]
-	print("discard: ",unseen_cards)
-	print(unseen_cards)
-	print(observation.fireworks())
-	for card in fireworks_2_cards(observation.fireworks()):
-		print(card)
 	[unseen_cards.remove(card) for card in fireworks_2_cards(observation.fireworks())]
 	return unseen_cards
 
