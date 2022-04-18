@@ -152,7 +152,9 @@ def k_worlds(game,state,k):
 	return worlds
 
 def PIMC(game,state,k=None):
+	print(state.cur_player())
 	moves = state.legal_moves()
+	print(state.cur_player())
 	score = [0]*len(moves)
 
 	if k == None:
@@ -162,10 +164,11 @@ def PIMC(game,state,k=None):
 
 	for m,move in enumerate(moves):
 		for w in all_worlds(game,state):
-			print("PIMC")
-			print(w.player_hands())
 			print(w.cur_player())
-			print(w.observation(w.cur_player()).observed_hands())
+			# print("PIMC")
+			# print(w.player_hands())
+			# print(w.cur_player())
+			# print(w.observation(w.cur_player()).observed_hands())
 			# print(move)
 			# print(w.legal_moves())
 			w.apply_move(move)

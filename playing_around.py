@@ -82,8 +82,9 @@ def run_game(game_parameters):
     # print(other_state)
     # print(other_state._state.Deck())
     """
-
+    print(state.cur_player())
     if state.cur_player() == 1:
+      print(state.cur_player())
       # move = double_dummy_action(state)
       move = PIMC(game,state)
     else:
