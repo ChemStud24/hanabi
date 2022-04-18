@@ -164,7 +164,8 @@ def PIMC(game,state,k=None):
 		for w in all_worlds(game,state):
 			print("PIMC")
 			print(w.player_hands())
-			print(w.deck_size())
+			print(w.cur_player())
+			print(w.observation().observed_hands(w.cur_player()))
 			# print(move)
 			# print(w.legal_moves())
 			w.apply_move(move)
