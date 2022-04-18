@@ -111,6 +111,7 @@ def run_game(game_parameters,iterations=1):
     # print(state)
     # print("")
     # print("score: {}".format(state.score()))
+    print("Game: " + str(i) + "\tScore: " + state.score())
     cum_score += state.score()
     if state.score() == game.num_colors()*game.num_ranks():
       perfects += 1
@@ -122,14 +123,14 @@ if __name__ == "__main__":
   assert pyhanabi.cdef_loaded(), "cdef failed to load"
   assert pyhanabi.lib_loaded(), "lib failed to load"
   # run_game({"players": 2, "random_start_player": False, "ranks": sys.argv[1], "colors": sys.argv[2]})
-  # r,c,iterations = int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3])
-  iterations = int(sys.argv[1])
-  for r in range(1,6):
-    for c in range(1,6):
-      ncards = 2*r*c
-      if ncards < 10:
-        continue
+  r,c,iterations = int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3])
+  # iterations = int(sys.argv[1])
+  # for r in range(1,6):
+  #   for c in range(1,6):
+  #     ncards = 2*r*c
+  #     if ncards < 10:
+  #       continue
       # t0 = time()
-      score = run_game({"players": 2, "random_start_player": False,"colors":c,"ranks":r},iterations)
-      # t = time() - t0
-      print("Ranks: " + str(r) + "\tColors: " + str(c) + "\tScore: " + str(score/(r*c)))
+  score = run_game({"players": 2, "random_start_player": False,"colors":c,"ranks":r},iterations)
+  # t = time() - t0
+  print("Ranks: " + str(r) + "\tColors: " + str(c) + "\tScore: " + str(score/(r*c)))
