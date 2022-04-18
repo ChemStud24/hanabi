@@ -126,15 +126,20 @@ def possible(cards,observation):
 	return True
 
 def all_worlds(game,state):
+	print(state.cur_player())
 	obs = state.observation(state.cur_player())
 	cards = possible_cards(game,obs)
 	my_hand_size = len(obs.observed_hands()[0])
 	possible_hands = permutations(cards,my_hand_size)
 	worlds = []
+	print(state.cur_player())
 	for hand in possible_hands:
 		if possible(hand,obs):
 			worlds.append(state.copy())
+			print(worlds[-1].cur_player())
 			worlds[-1].set_hand(state.cur_player(),hand)
+			print(worlds[-1].cur_player())
+			break
 	return worlds
 
 def k_worlds(game,state,k):
