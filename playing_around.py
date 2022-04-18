@@ -129,7 +129,6 @@ if __name__ == "__main__":
       ncards = 2*r*c
       if ncards < 10:
         continue
-      nworlds = len(list(permutations(range(ncards-5),5)))
       # t0 = time()
       score = run_game({"players": 2, "random_start_player": False,"colors":c,"ranks":r},iterations)
       # t = time() - t0
