@@ -87,8 +87,8 @@ def double_dummy_playout(state):
 			continue
 
 		move = double_dummy_action(state)
-		print('DD')
-		print(move)
+		# print('DD')
+		# print(move)
 		state.apply_move(move)
 	return state.score()
 
@@ -164,7 +164,7 @@ def PIMC(game,state,k=None):
 		for w in all_worlds(game,state):
 			print("PIMC")
 			print(move)
-			print(w.cur_player())
+			print(w.legal_moves())
 			w.apply_move(move)
 			print('got here')
 			score[m] += double_dummy_playout(w)
