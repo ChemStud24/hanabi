@@ -86,7 +86,7 @@ def run_game(game_parameters,iterations=1):
       """
       if state.cur_player() > -1:
         # move = double_dummy_action(state)
-        move = PIMC(game,state)
+        move = PIMC(game,state,k=100)
       else:
         observation = state.observation(state.cur_player())
         print_observation(observation)
