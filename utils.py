@@ -216,7 +216,7 @@ def alpha_mu(worlds,M):
 		for w,state in enumerate(worlds['states']):
 			if worlds['valid'][w] and worlds['score'][w] == None:
 				worlds['score'][w] = double_dummy_playout(state)
-				return worlds
+				return [worlds]
 
 	all_moves = []
 
