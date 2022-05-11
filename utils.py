@@ -260,7 +260,7 @@ def get_alpha_mu_action(game,state,M=2,k=100):
 
 	for m,move in enumerate(moves):
 		these_worlds = deep_copy(worlds)
-		for w in these_worlds:
+		for w in these_worlds['states']:
 			w.apply_move(move)
 		score[m] = front_score(alpha_mu(worlds,M-1))
 
