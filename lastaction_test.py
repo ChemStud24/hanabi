@@ -18,7 +18,7 @@ from __future__ import print_function
 
 import numpy as np
 from hanabi_learning_environment import pyhanabi
-from utils import double_dummy_action, possible_cards, PIMC, get_alpha_mu_action, last_action
+from utils import double_dummy_action, possible_cards, PIMC, get_alpha_mu_action, last_action, get_random_action
 import sys
 
 def print_state(state):
@@ -87,7 +87,7 @@ def run_game(game_parameters,iterations=1,k=None):
       """
       if state.cur_player() > -1:
         # move = double_dummy_action(state)
-        move = last_action(state)
+        move = get_random_action(state)
       else:
         observation = state.observation(state.cur_player())
         print_observation(observation)
