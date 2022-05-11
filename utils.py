@@ -191,7 +191,7 @@ def max_front(front):
 	return front
 
 def front_score(front):
-	return max(sum([s for s in vec['score'] if s != None])/len([s for s in vec['score'] if s != None]) for vec in front)
+	return max(sum([s for s in vec['score'] if s != None])/len(vec['score']) for vec in front)
 
 def stop(state,M,ply,all_players_worlds):
 	player_id = ply % NUM_PLAYERS
@@ -244,7 +244,7 @@ def alpha_mu(worlds,M):
 		front = max_front(front + f)
 	return front
 
-def get_alpha_mu_action(game,state,M=3,k=100):
+def get_alpha_mu_action(game,state,M=2,k=100):
 	moves = state.legal_moves()
 	score = [0]*len(moves)
 
