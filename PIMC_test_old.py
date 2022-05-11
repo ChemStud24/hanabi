@@ -44,13 +44,12 @@ def print_observation(observation):
   print("--- Observation ---")
   print(observation)
 
-def run_game(game_parameters,iterations=1,k=None):
+def run_game(game_parameters,iterations=1):
   """Play a game, selecting random actions."""
     
   game = pyhanabi.HanabiGame(game_parameters)
   # print(game.parameter_string(), end="")
   cum_score, perfects = 0, 0
-  scores = []
 
   for i in range(iterations):
     state = game.new_initial_state()
@@ -87,7 +86,7 @@ def run_game(game_parameters,iterations=1,k=None):
       """
       if state.cur_player() > -1:
         # move = double_dummy_action(state)
-        move = PIMC(game,state,k=k)
+        move = PIMC(game,state,k=100)
       else:
         observation = state.observation(state.cur_player())
         print_observation(observation)
@@ -113,13 +112,10 @@ def run_game(game_parameters,iterations=1,k=None):
     # print("")
     # print("score: {}".format(state.score()))
     print("Game: " + str(i) + "\tScore: " + str(state.score()))
-    # cum_score += state.score()
-    # if state.score() == game.num_colors()*game.num_ranks():
-    #   perfects += 1
-    scores.append(score)
-
-  # return cum_score/iterations
-  return np.mean(scores),np.std(scores)
+    cum_score += state.score()
+    if state.score() == game.num_colors()*game.num_ranks():
+      perfects += 1
+  return cum_score/iterations
 
 
 if __name__ == "__main__":
@@ -127,9 +123,7 @@ if __name__ == "__main__":
   assert pyhanabi.cdef_loaded(), "cdef failed to load"
   assert pyhanabi.lib_loaded(), "lib failed to load"
   # run_game({"players": 2, "random_start_player": False, "ranks": sys.argv[1], "colors": sys.argv[2]})
-
-  # r,c,iterations = int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3])
-
+  r,c,iterations = int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3])
   # iterations = int(sys.argv[1])
   # for r in range(1,6):
   #   for c in range(1,6):
@@ -137,11 +131,6 @@ if __name__ == "__main__":
   #     if ncards < 10:
   #       continue
       # t0 = time()
-
-  # score = run_game({"players": 2, "random_start_player": False,"colors":c,"ranks":r},iterations)
-  # # t = time() - t0
-  # print("Ranks: " + str(r) + "\tColors: " + str(c) + "\tScore: " + str(score/(r*c)))
-
-  for k in [1,10,100,1000,10000,100000]:
-    mu,sigma = run_game({"players": 2, "random_start_player": False,"colors":3,"ranks":3},sys.argv[1])
-    print("Max Worlds: " + str(k) + "\tMean: " + str(mu) + "\tSigma: " + str(sigma))
+  score = run_game({"players": 2, "random_start_player": False,"colors":c,"ranks":r},iterations)
+  # t = time() - t0
+  print("Ranks: " + str(r) + "\tColors: " + str(c) + "\tScore: " + str(score/(r*c)))
