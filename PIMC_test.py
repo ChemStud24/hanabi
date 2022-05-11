@@ -143,5 +143,5 @@ if __name__ == "__main__":
   # print("Ranks: " + str(r) + "\tColors: " + str(c) + "\tScore: " + str(score/(r*c)))
 
   for k in [1,10,100,1000,10000,100000]:
-    mu,sigma = run_game({"players": 2, "random_start_player": False,"colors":3,"ranks":3},sys.argv[1])
+    mu,sigma = run_game({"players": 2, "random_start_player": False,"colors":3,"ranks":3},int(sys.argv[1]))
     print("Max Worlds: " + str(k) + "\tMean: " + str(mu) + "\tSigma: " + str(sigma))
