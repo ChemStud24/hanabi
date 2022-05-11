@@ -191,6 +191,7 @@ def max_front(front):
 	return front
 
 def front_score(front):
+	print(front)
 	return max(sum(s for s in vec['score'] if s != None)/len(s for s in vec['score'] if s != None) for vec in front)
 
 def stop(state,M,ply,all_players_worlds):
