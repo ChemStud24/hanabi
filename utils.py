@@ -4,6 +4,8 @@ from hanabi_learning_environment.pyhanabi import color_char_to_idx, color_idx_to
 import random
 from itertools import permutations
 
+NUM_PLAYERS = 2
+
 def is_discardable(color,rank,state):
 	return rank <= state.fireworks()[color_char_to_idx(color)]
 
@@ -110,7 +112,6 @@ def all_cards(game):
 				yield {'color':color_idx_to_char(c),'rank':r}
 
 def possible_cards(game,observation):
-	# TODO remove firework cards
 	unseen_cards = list(all_cards(game))
 	[unseen_cards.remove(card.to_dict()) for hand in observation.observed_hands() for card in hand if card.rank() >= 0]
 	[unseen_cards.remove(card.to_dict()) for card in observation.discard_pile()]
@@ -174,3 +175,65 @@ def PIMC(game,state,k=None):
 	# print(i)
 	return moves[i]
 	# return max(zip(score,moves))[1]
+
+def dominates(vec1,vec2):
+	return all(v1 >= v2 for v1,v2 in zip(vec1,vec2))
+
+def max_front(front):
+	for vec in front:
+		if any(dominates(v,vec) for v in front if v != vec):
+			front.remove(vec)
+	return front
+
+def front_score(front):
+	return max(sum(vec)/len(vec) for vec in front)
+
+def stop(state,M,ply,all_players_worlds):
+	player_id = ply % NUM_PLAYERS
+	worlds = all_players_worlds[player_id]
+
+	if state.is_terminal():
+		return tuple(state.score() for w in worlds)
+	if ply >= M:
+		return tuple(double_dummy_playout(w) for w in worlds)
+
+def alpha_mu(state,M,ply,all_players_worlds):
+	# get this player and this player's worlds
+	player_id = ply % NUM_PLAYERS
+	worlds = all_players_worlds[player_id]
+
+	# return score if we're in a terminal state
+	if state.is_terminal():
+		return tuple(state.score() for w in worlds)
+
+	# update valid worlds
+	#TODO
+
+	# return DD results if we're at the end of the search
+	if ply >= M:
+		return tuple(double_dummy_playout(w) for w in worlds)
+
+	# get all moves
+	all_moves = state.legal_moves()
+
+	for move in all_moves:
+		for w in worlds:
+			s = state.copy().apply_move()
+
+def get_alpha_mu_action(game,state,M=3,k=100):
+	moves = state.legal_moves()
+	score = [0]*len(moves)
+
+	if k == None:
+		worlds = all_worlds(game,state)
+	else:
+		worlds = k_worlds(game,state,k)
+
+	all_players_worlds = [{'states':worlds,'valid':[True]*len(worlds)}] + [{'states':None,'valid':None}]*(NUM_PLAYERS-1)
+
+	for m,move in enumerate(moves):
+		these_worlds = [w.copy() for w in all_players_worlds]
+		for w in these_worlds:
+			w.apply_move(move)
+		apw[0]['states'] = these_worlds
+		score[m] = front_score(alpha_mu(apw))
