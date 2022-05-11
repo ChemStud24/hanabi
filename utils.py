@@ -179,7 +179,7 @@ def PIMC(game,state,k=None):
 def get_random_action(state):
 	return random.choice(state.legal_moves())
 
-def last_action(state)
+def last_action(state):
 	return state.legal_moves()[-1]
 
 def dominates(vec1,vec2):
