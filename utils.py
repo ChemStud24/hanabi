@@ -204,8 +204,8 @@ def stop(state,M,ply,all_players_worlds):
 
 def alpha_mu(worlds,M):
 	# get this player and this player's worlds
-	player_id = ply % NUM_PLAYERS
-	worlds = all_players_worlds[player_id]
+	# player_id = ply % NUM_PLAYERS
+	# worlds = all_players_worlds[player_id]
 
 	# # return score if we're in a terminal state
 	# if state.is_terminal():
