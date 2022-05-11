@@ -243,7 +243,7 @@ def alpha_mu(worlds,M):
 					these_worlds['valid'][w] == False
 		f = alpha_mu(these_worlds,M-1)
 		front = max_front(front + f)
-		print(front)
+	return front
 
 def get_alpha_mu_action(game,state,M=2,k=100):
 	moves = state.legal_moves()
