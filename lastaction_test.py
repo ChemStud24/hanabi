@@ -18,7 +18,7 @@ from __future__ import print_function
 
 import numpy as np
 from hanabi_learning_environment import pyhanabi
-from utils import double_dummy_action, possible_cards, PIMC, get_alpha_mu_action
+from utils import double_dummy_action, possible_cards, PIMC, get_alpha_mu_action, last_action
 import sys
 
 def print_state(state):
