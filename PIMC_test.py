@@ -116,7 +116,7 @@ def run_game(game_parameters,iterations=1,k=None):
     # cum_score += state.score()
     # if state.score() == game.num_colors()*game.num_ranks():
     #   perfects += 1
-    scores.append(score)
+    scores.append(state.score())
 
   # return cum_score/iterations
   return np.mean(scores),np.std(scores)
