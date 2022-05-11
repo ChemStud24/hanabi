@@ -176,8 +176,13 @@ def PIMC(game,state,k=None):
 	return moves[i]
 	# return max(zip(score,moves))[1]
 
+def get_random_action(state):
+	return random.choice(state.legal_moves())
+
 def dominates(vec1,vec2):
-	return all(v1 >= v2 for v1,v2 in zip(vec1,vec2))
+	if vec1['valid'] != vec2['valid']:
+		return False
+	return all(v1 >= v2 for v1,v2 in zip(vec1['score'],vec2['score']))
 
 def max_front(front):
 	for vec in front:
@@ -186,7 +191,7 @@ def max_front(front):
 	return front
 
 def front_score(front):
-	return max(sum(vec)/len(vec) for vec in front)
+	return max(sum(s for s in vec['score'] if s != None)/len(s for s in vec['score'] if s != None) for vec in front)
 
 def stop(state,M,ply,all_players_worlds):
 	player_id = ply % NUM_PLAYERS
@@ -197,43 +202,75 @@ def stop(state,M,ply,all_players_worlds):
 	if ply >= M:
 		return tuple(double_dummy_playout(w) for w in worlds)
 
-def alpha_mu(state,M,ply,all_players_worlds):
+def alpha_mu(worlds,M):
 	# get this player and this player's worlds
 	player_id = ply % NUM_PLAYERS
 	worlds = all_players_worlds[player_id]
 
-	# return score if we're in a terminal state
-	if state.is_terminal():
-		return tuple(state.score() for w in worlds)
-
-	# update valid worlds
-	#TODO
+	# # return score if we're in a terminal state
+	# if state.is_terminal():
+	# 	return tuple(state.score() for w in worlds)
 
 	# return DD results if we're at the end of the search
-	if ply >= M:
-		return tuple(double_dummy_playout(w) for w in worlds)
+	if M <= 0:
+		for w,state in enumerate(worlds['states']):
+			if worlds['valid'][w] and worlds['score'][w] == None:
+				worlds['score'][w] = double_dummy_playout(state)
+				return worlds
 
-	# get all moves
-	all_moves = state.legal_moves()
+	all_moves = []
 
+	for w,state in enumerate(worlds['states']):
+		if worlds['valid'][w] and worlds['score'][w] == None:
+
+			# record the score for any worlds in terminal states
+			if state.is_terminal():
+				worlds['score'][w] = state.score()
+
+			# get all moves
+			l = state.legal_moves()
+			all_moves.extend(m for m in l if not m in all_moves)
+
+	front = []
 	for move in all_moves:
-		for w in worlds:
-			s = state.copy().apply_move()
+		these_worlds = deep_copy(worlds)
+		for w,state in enumerate(these_worlds['states']):
+			if these_worlds['valid'][w] and not state.is_terminal():
+				if move in state.legal_moves():
+					state.apply_move(move)
+				else:
+					these_worlds['valid'][w] == False
+		f = alpha_mu(these_worlds,M-1)
+		front = max_front(front + f)
 
-def get_alpha_mu_action(game,state,M=3,k=100):
+def get_alpha_mu_action(game,state,M=2,k=100):
 	moves = state.legal_moves()
 	score = [0]*len(moves)
 
+	worlds = {}
 	if k == None:
-		worlds = all_worlds(game,state)
+		worlds['states'] = all_worlds(game,state)
 	else:
-		worlds = k_worlds(game,state,k)
+		worlds['states'] = k_worlds(game,state,k)
 
-	all_players_worlds = [{'states':worlds,'valid':[True]*len(worlds)}] + [{'states':None,'valid':None}]*(NUM_PLAYERS-1)
+	worlds['valid'] = [True]*len(worlds['states'])
+	worlds['score'] = [None]*len(worlds['states'])
+
+	# all_players_worlds = [{'states':worlds,'valid':[True]*len(worlds)},'score':[None]*len(worlds)] + [{'states':None,'valid':None,'score':None}]*(NUM_PLAYERS-1)
 
 	for m,move in enumerate(moves):
-		these_worlds = [w.copy() for w in all_players_worlds]
+		these_worlds = deep_copy(worlds)
 		for w in these_worlds:
 			w.apply_move(move)
-		apw[0]['states'] = these_worlds
-		score[m] = front_score(alpha_mu(apw))
+		score[m] = front_score(alpha_mu(worlds,M-1))
+
+	# return the move that yielded the highest-scoring front
+	i = max((x,i) for i,x in enumerate(score))[1]
+	return moves[i]
+
+def deep_copy(worlds):
+	new_worlds = {}
+	new_worlds['states'] = [w.copy() for w in worlds['states']]
+	new_worlds['valid'] = [v for v in worlds['valid']]
+	new_worlds['score'] = [s for s in worlds['score']]
+	return new_worlds
