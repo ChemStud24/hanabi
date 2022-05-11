@@ -44,7 +44,7 @@ def print_observation(observation):
   print("--- Observation ---")
   print(observation)
 
-def run_game(game_parameters,iterations=1,k=None):
+def run_game(game_parameters,iterations=1,k=None,M=2):
   """Play a game, selecting random actions."""
     
   game = pyhanabi.HanabiGame(game_parameters)
@@ -85,9 +85,9 @@ def run_game(game_parameters,iterations=1,k=None):
       # print(other_state)
       # print(other_state._state.Deck())
       """
-      if state.cur_player() > 0:
+      if state.cur_player() > -1:
         # move = double_dummy_action(state)
-        move = get_alpha_mu_action(game,state,k=k)
+        move = get_alpha_mu_action(game,state,k=k,M=M)
       else:
         observation = state.observation(state.cur_player())
         print_observation(observation)
@@ -142,8 +142,11 @@ if __name__ == "__main__":
   # # t = time() - t0
   # print("Ranks: " + str(r) + "\tColors: " + str(c) + "\tScore: " + str(score/(r*c)))
 
-  # for k in [1,10,100,1000,10000,100000]:
-  #   mu,sigma = run_game({"players": 2, "random_start_player": False,"colors":3,"ranks":3},int(sys.argv[1]),k=k)
-  #   print("Max Worlds: " + str(k) + "\tMean: " + str(mu) + "\tSigma: " + str(sigma))
+  for k in [1,10,100,1000,10000]:
+    mu,sigma = run_game({"players": 2, "random_start_player": False,"colors":3,"ranks":3},int(sys.argv[1]),k=k,M=2)
+    print("Max Depth: 2\tMax Worlds: " + str(k) + "\tMean: " + str(mu) + "\tSigma: " + str(sigma))
 
-  run_game({"players": 2, "random_start_player": False,"colors":3,"ranks":3},1,k=100)
+  for k in [1,10,100,1000,10000]:
+    mu,sigma = run_game({"players": 2, "random_start_player": False,"colors":3,"ranks":3},int(sys.argv[1]),k=k,M=3)
+    print("Max Depth: 3\tMax Worlds: " + str(k) + "\tMean: " + str(mu) + "\tSigma: " + str(sigma))
+  # run_game({"players": 2, "random_start_player": False,"colors":3,"ranks":3},10,k=100)
