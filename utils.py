@@ -182,7 +182,7 @@ def get_random_action(state):
 def dominates(vec1,vec2):
 	if vec1['valid'] != vec2['valid']:
 		return False
-	return all(v1 >= v2 for v1,v2 in zip(vec1['score'],vec2['score']))
+	return all(v1 >= v2 for v1,v2 in zip(vec1['score'],vec2['score']) if v1 != None and v2 != None)
 
 def max_front(front):
 	for vec in front:
