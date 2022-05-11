@@ -244,7 +244,7 @@ def alpha_mu(worlds,M):
 		front = max_front(front + f)
 	return front
 
-def get_alpha_mu_action(game,state,M=2,k=100):
+def get_alpha_mu_action(game,state,M=3,k=100):
 	moves = state.legal_moves()
 	score = [0]*len(moves)
 
